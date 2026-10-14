@@ -1,0 +1,5 @@
+SELECT * FROM Students
+ORDER BY Marks ASC;
+
+SELECT * FROM Students
+ORDER BY Marks DESC;
