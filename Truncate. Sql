@@ -1,0 +1,81 @@
+CREATE TABLE departments (
+    dept_id INT AUTO_INCREMENT PRIMARY KEY,
+    dept_name VARCHAR(50) NOT NULL
+);
+
+-- Create a child table for employees linked to departments
+CREATE TABLE employees (
+    emp_id INT AUTO_INCREMENT PRIMARY KEY,
+    first_name VARCHAR(50) NOT NULL,
+    salary DECIMAL(10,2),
+    dept_id INT,
+    -- This foreign key constraint prevents accidental parent table truncation
+    FOREIGN KEY (dept_id) REFERENCES departments(dept_id) 
+);
+
+-- Insert dummy data into departments
+INSERT INTO departments (dept_name) VALUES ('HR'), ('IT'), ('Finance');
+
+-- Insert dummy data into employees
+INSERT INTO employees (first_name, salary, dept_id) 
+VALUES ('Alice', 75000, 2), ('Bob', 60000, 1), ('Charlie', 90000, 2);
+
+
+-- =========================================================================
+-- SCENARIO 1: Standard Usage of TRUNCATE (Wiping the Employee Table)
+-- =========================================================================
+
+-- Step A: Clear all rows from the employee table instantly
+-- This is much faster than DELETE because it deallocates the table's storage pages
+TRUNCATE TABLE employees;
+
+-- Step B: Verify the result
+-- This query will return 0 rows because everything was cleared out
+SELECT * FROM employees;
+
+-- Step C: Test the auto-increment reset behavior
+-- Because we used TRUNCATE, the emp_id identity counter resets back to 1
+INSERT INTO employees (first_name, salary, dept_id) VALUES ('David', 80000, 2);
+
+-- David's emp_id will be 1 (completely reset), NOT 4
+SELECT * FROM employees;
+
+
+-- =========================================================================
+-- SCENARIO 2: Handling Foreign Key Blocks (The "Cannot Truncate" Error)
+-- =========================================================================
+
+-- If you try to run the query below, the database engine will throw an error:
+-- "Cannot truncate table 'departments' because it is being referenced by a FOREIGN KEY constraint."
+-- TRUNCATE TABLE departments; 
+
+-- WORKAROUND FOR MYSQL: Temporarily disable foreign key checks
+SET FOREIGN_KEY_CHECKS = 0;
+
+-- Now the database allows you to wipe the parent table clean
+TRUNCATE TABLE departments;
+
+-- CRITICAL STEP: Always turn foreign key safety checks back on immediately!
+SET FOREIGN_KEY_CHECKS = 1;
+
+
+-- WORKAROUND FOR POSTGRESQL: Cascade the truncation
+-- In PostgreSQL, you don't turn off checks; instead, you tell it to wipe out 
+-- the referencing child data automatically using the CASCADE keyword:
+-- TRUNCATE TABLE departments CASCADE;
+
+
+-- =========================================================================
+-- SCENARIO 3: When to use DELETE instead of TRUNCATE
+-- =========================================================================
+
+-- Re-inserting data into employees for this example...
+INSERT INTO employees (first_name, salary, dept_id) VALUES ('Eve', 85000, 3);
+
+-- If you only want to clear specific rows, TRUNCATE cannot do this.
+-- You must use DELETE with a WHERE clause:
+DELETE FROM employees 
+WHERE salary > 70000; 
+
+-- Unlike TRUNCATE, the DELETE command does NOT reset the auto-increment counter. 
+-- The next inserted employee will continue 
