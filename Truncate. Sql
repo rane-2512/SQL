@@ -79,3 +79,9 @@ WHERE salary > 70000;
 
 -- Unlike TRUNCATE, the DELETE command does NOT reset the auto-increment counter. 
 -- The next inserted employee will continue 
+
+
+/*TRUNCATE removes all rows from a table quickly and resets the auto-increment counter in MySQL.
+Foreign key constraints can prevent truncating a parent table referenced by a child table.
+FOREIGN_KEY_CHECKS can temporarily disable MySQL foreign key checks, but this requires caution.
+DELETE removes selected rows using WHERE and generally does not reset the auto-increment counter.*/
