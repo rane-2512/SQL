@@ -1,3 +1,15 @@
-create table emp6(empid int primary key,fname varchar(10),lname varchar(10),age int,salary int);
-alter table emp6 add constraint chk_const check(age>20 and salary>=5000);
-desc emp6;
+-- Creates the emp6 table with employee details.
+CREATE TABLE emp6 (
+    empid INT PRIMARY KEY,
+    fname VARCHAR(10),
+    lname VARCHAR(10),
+    age INT,
+    salary INT
+);
+
+-- Adds a CHECK constraint: age must be above 20 and salary at least 5000.
+ALTER TABLE emp6
+ADD CONSTRAINT chk_const CHECK(age > 20 AND salary >= 5000);
+
+-- Displays the structure of the emp6 table.
+DESC emp6;
