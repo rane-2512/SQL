@@ -19,3 +19,6 @@ INSERT INTO Student VALUES (102, 'Priya', 2);
 INSERT INTO Student VALUES (103, 'Rahul', 3);
 
 SELECT * FROM Student;
+
+-- Creates Department and Student tables with primary key and foreign key constraints.
+-- Inserts department and student records, linking each student to a department, and displays all student records.
