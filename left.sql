@@ -1,1 +1,6 @@
-select left(e_name,5) from employes where e_name like 'h%';
+```sql
+-- Display the first 5 characters of names starting with 'h'
+SELECT LEFT(e_name, 5)
+FROM employes
+WHERE e_name LIKE 'h%';
+```
