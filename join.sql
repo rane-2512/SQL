@@ -1,29 +1,61 @@
-create database basicjoin;
-use basicjoin;
-create table employee(eid int primary key,ename varchar(30));
-desc employee;
-insert into employee values(1,"ram");
-insert into employee values(2,"shyam");
-insert into employee values(3,"radha");
-insert into employee values(4,"tanvi");
-insert into employee values(5,"mohan");
+```sql
+-- Create a new database
+CREATE DATABASE basicjoin;
 
-select * from employee;
+-- Select the database
+USE basicjoin;
 
-create table project(pid int primary key,pname varchar(30),eid int,foreign key(eid) references employee(eid));
-desc project;
+-- Create the employee table
+CREATE TABLE employee (
+    eid INT PRIMARY KEY,
+    ename VARCHAR(30)
+);
 
-insert into project values(101,"database",1),
-(102,"project b",2),
-(103,'project c',1),
-(104,"project d",3);
+-- Display the table structure
+DESC employee;
 
-select * from project;
-insert into project values(105,"project e",4),(106,"project t",Null);
-select * from project;
+-- Insert employee records
+INSERT INTO employee VALUES (1, "ram");
+INSERT INTO employee VALUES (2, "shyam");
+INSERT INTO employee VALUES (3, "radha");
+INSERT INTO employee VALUES (4, "tanvi");
+INSERT INTO employee VALUES (5, "mohan");
 
--- inner join
+-- Display all employees
+SELECT * FROM employee;
 
-select * from employee
-join project
-on employee.eid=project.eid;
+-- Create the project table with a foreign key
+CREATE TABLE project (
+    pid INT PRIMARY KEY,
+    pname VARCHAR(30),
+    eid INT,
+    FOREIGN KEY (eid) REFERENCES employee(eid)
+);
+
+-- Display the project table structure
+DESC project;
+
+-- Insert project records
+INSERT INTO project VALUES
+(101, "database", 1),
+(102, "project b", 2),
+(103, "project c", 1),
+(104, "project d", 3);
+
+-- Display all projects
+SELECT * FROM project;
+
+-- Insert more projects, including one without an assigned employee
+INSERT INTO project VALUES
+(105, "project e", 4),
+(106, "project t", NULL);
+
+-- Display updated project records
+SELECT * FROM project;
+
+-- INNER JOIN: Display employees and their matching projects
+SELECT *
+FROM employee
+INNER JOIN project
+ON employee.eid = project.eid;
+```
