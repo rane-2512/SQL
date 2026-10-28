@@ -16,5 +16,6 @@ INSERT INTO Student VALUES (1, 'Amit', 21, 'Delhi');
 -- Error: NULL primary key
 INSERT INTO Student VALUES (NULL, 'Sneha', 18, 'Pune');
 
-SELECT * FROM Student;
+select * from student;
+-- display all values
 
