@@ -12,12 +12,13 @@ This repository contains SQL queries and database exercises that I practice dail
 - Constraints (Primary Key, Foreign Key, CHECK)
 - ALTER, UPDATE and DELETE
 - Joins and Aggregate Functions
+- some advance queries
+- daily challenges
 
 ## 🛠️ Tools Used
-- SQL
-- DBMS
+- MYSQL
 
 ## 🎯 Goal
-To improve my SQL skills, understand database concepts, and strengthen my problem-solving abilities through daily practice.
+To improve my SQL skills, understand database concepts, and strengthen my problem-solving abilities through daily practice. Learn something which will help me to make my foundation strong in sql
 
 **Learning something new every day! 💻✨**
